@@ -128,11 +128,12 @@ exports.configurator = function (name, options) {
     }
 };
 
-exports.use = function (cwd) {
+exports.use = function (cwd, useOptions) {
     cwd = cwd || process.cwd();
-    return function (module, configs) {
+    return function (module, configs, installOptions) {
+        installOptions = extend({}, useOptions, installOptions);
         if (module[0] !== '.') {
-            exports.install(module);
+            exports.install(module, installOptions);
         } else {
             module = path.resolve(cwd, module);
         }

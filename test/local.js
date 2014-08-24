@@ -1,5 +1,8 @@
 /**
  * Created by karl on 23/08/14.
+ *
+ * Example local config file for sails
+ *
  */
 
 var sailsConfig = require('..');
@@ -23,3 +26,4 @@ use('sails-config-mongo-session', {
 console.log(sailsConfig.local);
 
 module.exports = sailsConfig.local;
+
