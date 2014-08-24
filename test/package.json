@@ -1,0 +1,15 @@
+{
+  "name": "test-sails-config",
+  "version": "0.0.0",
+  "description": "dummy sails app to test sails-config",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kavaro <karl.van.rompaey@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "sails-config-mongo-session": "0.0.1",
+    "connect-session": "0.0.1"
+  }
+}

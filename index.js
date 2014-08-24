@@ -138,7 +138,7 @@ module.exports = function (localModule, localRequire) {
         if (is.object(config)) {
             setup.log('CONFIG:', name, 'FOR', env);
             setup.install(options.modules, null);
-            setup.local[name] = config;
+            extend(setup.local[name] || (setup.local[name] = {}), config);
         } else {
             eachModule(options.modules, null, function (module, options) {
                 if (options.uninstall) setup.uninstall(module, options);
@@ -146,11 +146,11 @@ module.exports = function (localModule, localRequire) {
         }
     };
 
-    // create configurator function
+    // create plugin, returns a plugin function that can be passed to 'use'
     //  - name {string}: name of the config
     //  - options {object}: any options that can be passed to setup.config with the following additions
     //      - sailsConfig: sailsConfig instance, defaults to the sailsConfig used when the configurator was created
-    setup.configurator = function (name, options) {
+    setup.plugin = function (name, options) {
         return function (configs) {
             setup.config(name, extend(true, {}, options, { configs: configs }));
         }
