@@ -41,7 +41,16 @@ exports.npmOptions = function (module) {
 
 exports.execSilent = false;
 
-// called to execute command line
+// called to log messages to the screen
+exports.log = function () {
+};
+
+// get the environment, allows to customize how the environment is determined
+exports.env = function () {
+    return process.env.NODE_ENV || 'development';
+};
+
+// called to execute app
 exports.exec = function (command) {
     var result = sh.exec(command, { silent: exports.execSilent });
     if (result.code) {
@@ -81,15 +90,6 @@ exports.install = function (module, options) {
         } else command = ['npm', 'install', module, options.save].join(' ');
         exports.npmExec(command);
     });
-};
-
-// called to log messages to the screen
-exports.log = function () {
-};
-
-// get the environment, allows to customize how the environment is determined
-exports.env = function () {
-    return process.env.NODE_ENV || 'development';
 };
 
 // configure name with options
@@ -139,5 +139,9 @@ exports.use = function (cwd, useOptions) {
         }
         require(module)(exports)(configs);
     };
+};
+
+exports.get = function() {
+    return extend({ environment: exports.env() }, exports.local);
 };
 

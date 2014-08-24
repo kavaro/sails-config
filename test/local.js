@@ -20,7 +20,7 @@ use('sails-config-mongo-session', {
 });
 
 
-console.log(sailsConfig.local);
+console.log(sailsConfig.get());
 
-module.exports = sailsConfig.local;
+module.exports = sailsConfig.get();
 
