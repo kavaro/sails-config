@@ -24,6 +24,7 @@
     "is": "~1.1.0",
     "shelljs": "~0.3.0",
     "sails-config-mongo-session": "0.0.1",
-    "connect-session": "0.0.1"
+    "connect-session": "0.0.1",
+    "pkginfo": "~0.3.0"
   }
 }
