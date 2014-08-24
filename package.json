@@ -1,6 +1,6 @@
 {
   "name": "sails-config",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Utility to create a sails local config",
   "main": "index.js",
   "scripts": {

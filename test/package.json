@@ -9,7 +9,5 @@
   "author": "kavaro <karl.van.rompaey@hotmail.com>",
   "license": "MIT",
   "dependencies": {
-    "sails-config-mongo-session": "0.0.1",
-    "connect-session": "0.0.1"
   }
 }

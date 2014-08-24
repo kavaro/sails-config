@@ -172,7 +172,7 @@ module.exports = function (localModule, localRequire) {
         };
         var ssl = setup.ssl();
         if (ssl) defaultLocal.ssl = ssl;
-        return extend(defaultLocal, setup.local, local);
+        return extend(true, {}, defaultLocal, setup.local, local);
     };
     return setup;
 };
