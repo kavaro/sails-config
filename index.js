@@ -39,6 +39,7 @@ exports.npmOptions = function (module) {
     }
 };
 
+// execute command line apps silently or not
 exports.execSilent = false;
 
 // called to log messages to the screen
@@ -128,6 +129,10 @@ exports.configurator = function (name, options) {
     }
 };
 
+// create a use method that resolves relative modules using cwd || process.cwd() and install the module using
+// the default useOptions. The useOptions can be overridden when calling use.
+// The returned use function can be given a configurator module to install, the configs to pass to the
+// configurator and installOptions.
 exports.use = function (cwd, useOptions) {
     cwd = cwd || process.cwd();
     return function (module, configs, installOptions) {
@@ -141,6 +146,7 @@ exports.use = function (cwd, useOptions) {
     };
 };
 
+// returns that locals, including the environment key
 exports.get = function() {
     return extend({ environment: exports.env() }, exports.local);
 };
