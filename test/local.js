@@ -13,9 +13,6 @@ var dev = {
     db: 'test'
 };
 
-var prod = {
-};
-
 use('sails-config-mongo-session', {
     development: {
         db: dev.db
