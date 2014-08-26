@@ -9,6 +9,9 @@ var is = require('is');
 var sh = require('shelljs');
 var pkginfo = require('pkginfo');
 
+var installs = [];
+var uninstalls = [];
+
 module.exports = function (localModule, localRequire) {
     var app = pkginfo.read(localModule);
     var setup = {
@@ -98,12 +101,7 @@ module.exports = function (localModule, localRequire) {
     // module can be anything that eachModule supports
     setup.uninstall = function (module, options) {
         eachModule(module, options, function (module, options) {
-            var command = null;
-            options = extend(setup.npmOptions(module), options);
-            if (sh.test('-e', path.join(options.cwd, 'node_modules', options.name))) {
-                command = ['npm', 'uninstall', module, options.save].join(' ');
-            }
-            setup.npmExec(command);
+            uninstalls.push({ module: module, options: extend(setup.npmOptions(module), options) });
         });
     };
 
@@ -111,12 +109,7 @@ module.exports = function (localModule, localRequire) {
     // module can be anything that eachModule supports
     setup.install = function (module, options) {
         eachModule(module, options, function (module, options) {
-            var command = null;
-            options = extend(setup.npmOptions(module), options);
-            if (sh.test('-e', path.join(options.cwd, 'node_modules', options.name))) {
-                if (options.update) command = ['npm', 'update', module, options.save].join(' ');
-            } else command = ['npm', 'install', module, options.save].join(' ');
-            setup.npmExec(command);
+            installs.push({ module: module, options: extend(setup.npmOptions(module), options) });
         });
     };
 
@@ -166,6 +159,24 @@ module.exports = function (localModule, localRequire) {
 
     // return local object, extended with common sense defaults
     setup.get = function (local) {
+        uninstalls.forEach(function(uninstall) {
+            var command = null;
+            var options = module.options;
+            var module = module.module;
+            if (sh.test('-e', path.join(options.cwd, 'node_modules', options.name))) {
+                command = ['npm', 'uninstall', module, options.save].join(' ');
+            }
+            setup.npmExec(command);
+        });
+        installs.forEach(function(install) {
+            var command = null;
+            var options = install.options;
+            var module = install.module;
+            if (sh.test('-e', path.join(options.cwd, 'node_modules', options.name))) {
+                if (options.update) command = ['npm', 'update', module, options.save].join(' ');
+            } else command = ['npm', 'install', module, options.save].join(' ');
+            setup.npmExec(command);
+        });
         var defaultLocal = {
             environment: setup.env(),
             port: setup.port()
